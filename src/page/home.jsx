@@ -1,14 +1,94 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaCode, FaMobile, FaDesktop, FaDatabase, FaBars, FaTimes } from 'react-icons/fa';
+
+const roles = ["Software Developer", "ICT Graduate", "Tech Enthusiast", "Web developer"];
+
+const services = [
+  { icon: FaCode, title: "Web Development", description: "Creating responsive and dynamic web applications using modern frameworks and technologies." },
+  { icon: FaMobile, title: "Mobile App Development", description: "Developing cross-platform mobile applications for iOS and Android using React Native and Java." },
+  { icon: FaDesktop, title: "Desktop Application Development", description: "Building efficient and user-friendly desktop applications using Java and other technologies." },
+  { icon: FaDatabase, title: "Database Management", description: "Designing and managing databases, ensuring data integrity and optimal performance." }
+];
+
+const projects = [
+  {
+    title: "Electrical Services",
+    description: "A website for an electrical services company showcasing their offerings and expertise.",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2069&q=80",
+    link: "https://github.com/Host-It-Services/electrical_services"
+  },
+  {
+    title: "Host It Services",
+    description: "Web platform for Host It Services, offering various IT solutions and hosting services.",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2072&q=80",
+    link: "https://github.com/Host-It-Services/Host_It_Services_web"
+  },
+  {
+    title: "Lab Trader",
+    description: "An e-commerce platform specialized in diamond trading and laboratory equipment.",
+    image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=2070&q=80",
+    link: "https://github.com/MukunaChristian/labtrader"
+  },
+  {
+    title: "Link2Extreme",
+    description: "A system for extreme sports and adventure activities.",
+    image: "/public/L2X.png",
+    link: "https://github.com/MukunaChristian/Link2Extreme"
+  },
+  {
+    title: "Career Pilot App",
+    description: "A responsive web application for managing career tasks and productivity goals.",
+    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=2072&q=80",
+    link: "https://github.com/MukunaChristian/Career-Pilot-backend"
+  },
+  {
+    title: "Storage Rental System",
+    description: "A storage management platform where users can store items while traveling or needing temporary storage solutions.",
+    image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?auto=format&fit=crop&w=2070&q=80",
+    link: "https://github.com/MukunaChristian/Storage-Rental-System-2.0-FrontEnd"
+  },
+  {
+    title: "Mwimpe E-Commerce",
+    description: "A skincare e-commerce website, offering a variety of skincare products with a focus on user-friendly shopping experiences.",
+    image: "https://images.unsplash.com/photo-1570554886111-e80fcca6a029?auto=format&fit=crop&w=2070&q=80",
+    link: "https://github.com/MukunaChristian/Mwimpe-Ecom"
+  },
+  {
+    title: "Job Search System",
+    description: "An application for job seekers and employers to post and find job opportunities, providing a comprehensive platform for job searching and recruitment.",
+    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=2070&q=80",
+    link: "https://github.com/MukunaChristian/Job-Search-System"
+  }
+]
+
+const skills = [
+  { name: "HTML", level: 100 },
+  { name: "CSS & SCSS & Tailwind", level: 100 },
+  { name: "Java", level: 85 },
+  { name: "JavaScript", level: 70 },
+  { name: "Python", level: 60 },
+  { name: "Git", level: 85 },
+  { name: "GitHub", level: 85 },
+  { name: "React & Next.js", level: 95 },
+  { name: "TypeScript", level: 70 },
+]
+
+
 export default function Portfolio() {
   const [roleIndex, setRoleIndex] = useState(0);
-  const roles = ["Software Developer", "ICT Graduate", "Tech Enthusiast"];
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [visibleSections, setVisibleSections] = useState([]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const sectionRefs = {
+    about: useRef(null),
+    services: useRef(null),
+    skills: useRef(null),
+    work: useRef(null),
+    contact: useRef(null),
   };
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -18,236 +98,252 @@ export default function Portfolio() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => [...new Set([...prev, entry.target.id])]);
+          } else {
+            setVisibleSections((prev) => prev.filter((id) => id !== entry.target.id));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    Object.values(sectionRefs).forEach((ref) => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    return () => {
+      Object.values(sectionRefs).forEach((ref) => {
+        if (ref.current) observer.unobserve(ref.current);
+      });
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log('Form submitted:', { name, email, message });
   };
 
-  const projects = [
-    {
-      title: "Electrical Services",
-      description: "A website for electrical services company showcasing their offerings and expertise.",
-      image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
-      link: "https://github.com/Host-It-Services/electrical_services"
-    },
-    {
-      title: "Host It Services",
-      description: "Web platform for Host It Services, offering various IT solutions and hosting services.",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-      link: "https://github.com/Host-It-Services/Host_It_Services_web"
-    },
-    {
-      title: "Lab Trader",
-      description: "An e-commerce platform specialized in laboratory equipment and supplies trading.",
-      image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      link: "https://github.com/MukunaChristian/labtrader"
-    },
-    {
-      title: "Link2Extreme Booking",
-      description: "A booking system for extreme sports and adventure activities.",
-      image: "https://images.unsplash.com/photo-1533731780465-f2d7a30eeb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      link: "https://github.com/MukunaChristian/Link2ExtremeBooking"
+  const handleMenuClick = () => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
     }
-  ];
-
-  const services = [
-    { icon: FaCode, title: "Web Development", description: "Creating responsive and dynamic web applications using modern frameworks and technologies." },
-    { icon: FaMobile, title: "Mobile App Development", description: "Developing cross-platform mobile applications for iOS and Android using React Native and Java." },
-    { icon: FaDesktop, title: "Desktop Application Development", description: "Building efficient and user-friendly desktop applications using Java and other technologies." },
-    { icon: FaDatabase, title: "Database Management", description: "Designing and managing databases, ensuring data integrity and optimal performance." }
-  ];
-
-
-
+  };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-red-500 hover:text-red-600 transition-colors">
-            Christian Mukuna Mbuyi
-          </a>
-          <button
-            className="text-white text-2xl md:hidden"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-          <div className={`md:flex space-x-4 md:static absolute w-full md:w-auto top-16 left-0 bg-black md:bg-transparent p-4 md:p-0 transition-transform transform md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <a href="#about" className="block md:inline hover:text-red-500 transition-colors">About</a>
-            <a href="#services" className="block md:inline hover:text-red-500 transition-colors">Services</a>
-            <a href="#skills" className="block md:inline hover:text-red-500 transition-colors">Skills</a>
-            <a href="#work" className="block md:inline hover:text-red-500 transition-colors">Work</a>
-            <a href="#contact" className="block md:inline hover:text-red-500 transition-colors">Contact</a>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-white text-black">
+     <nav className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <a href="#" className="text-2xl font-bold text-black hover:text-gray-700 transition-colors">
+          Christian Mukuna Mbuyi
+        </a>
 
-      {/* Hero Section */}
-      <section className="pt-20 pb-12 md:py-32">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Hi, I'm <span className="text-red-500">Christian Mukuna Mbuyi</span></h1>
-            <p className="text-xl mb-6">
-              I&apos;m a <span className="text-red-500 font-bold animate-pulse">{roles[roleIndex]}</span>
-            </p>
-            <p className="mb-6">Passionate about creating innovative software solutions and always ready for new challenges.</p>
-            <div className="flex space-x-4 mb-6">
-              <a href="https://github.com/MukunaChristian" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors">
-                <FaGithub size={24} />
-              </a>
-              <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors">
-                <FaLinkedin size={24} />
-              </a>
-              <a href="mailto:christianmbuyimukuna@gmail.com" className="text-white hover:text-red-500 transition-colors">
-                <FaEnvelope size={24} />
-              </a>
-              <a href="tel:0683806340" className="text-white hover:text-red-500 transition-colors">
-                <FaPhone size={24} />
-              </a>
-            </div>
-            <a href="#contact" className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded transition-colors">Get In Touch</a>
-          </div>
-          <div className="md:w-1/2">
-            <img
-              src="/placeholder.svg?height=400&width=400"
-              alt="Christian Mukuna Mbuyi"
-              className="rounded-full mx-auto animate-bounce"
-            />
-          </div>
-        </div>
-      </section>
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-black hover:text-gray-700"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        </button>
 
-      {/* About Section */}
-      <section id="about" className="py-12 md:py-24 bg-zinc-900">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">About Me</h2>
-          <div className="flex flex-col md:flex-row items-center">
+        {/* Menu Items */}
+        <div
+          className={`${
+            isMobileMenuOpen ? 'block' : 'hidden'
+          } md:flex md:space-x-8 space-y-4 md:space-y-0 absolute md:relative top-full left-0 right-0 bg-white md:bg-transparent shadow-md md:shadow-none transition-all duration-300 ease-in-out transform md:transform-none`}
+        >
+          {['About', 'Services', 'Skills', 'Work', 'Contact'].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="block md:inline py-2 px-4 md:px-0 text-black hover:text-gray-600 transition-colors"
+              onClick={handleMenuClick}  // Close the menu on item click
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+      <main>
+        <section className="py-20 md:py-32 bg-white">
+          <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
-              <img
-                src="/placeholder.svg?height=400&width=400"
-                alt="Christian Mukuna Mbuyi"
-                className="rounded-lg mx-auto w-full max-w-md transform transition-transform duration-500 hover:scale-105"
-              />
-            </div>
-            <div className="md:w-1/2 md:pl-8">
-              <p className="mb-4">
-                I'm Christian Mukuna Mbuyi, a dedicated and forward-thinking software developer intern. I recently completed my diploma in ICT application development at Cape Peninsula University of Technology. Known for my diligence and quick learning abilities, I approach each day as a new adventure, fully prepared for any challenge that comes my way.
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">Hi, I&apos;m <span className="text-black">Christian Mukuna Mbuyi</span></h1>
+              <p className="text-xl mb-6">
+                I&apos;m a <span className="text-black font-bold animate-pulse">{roles[roleIndex]}</span>
               </p>
-              <p className="mb-4">
-                I've contributed to the creation of software and applications for group projects, and I have experience in both desktop and mobile programming. My journey in tech began with my state diploma in commerce and administration, which is equivalent to a matric certificate, where I gained initial exposure to HTML, CSS, JavaScript, and Visual Studio.
-              </p>
-              <p>
-                Currently enrolled in my final year of ICT at Cape Peninsula University of Technology, I'm expanding my skills in Java and Android programming, design patterns, object orientation, data structures, algorithms, software analysis, normalization, unit testing, Git, GitHub, React with TypeScript, and client-server programming using sockets.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-12 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">My Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <div key={index} className="bg-zinc-800 p-6 rounded-lg transform transition-all duration-300 hover:scale-105 hover:bg-zinc-700">
-                <service.icon className="text-red-500 text-4xl mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-zinc-300">{service.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="py-12 md:py-24 bg-zinc-900">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">My Skills</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {["HTML", "CSS", "JavaScript", "Python", "Java", "MySQL", "Android Studio", "React", "TypeScript", "Git", "GitHub", "Visual Studio"].map((skill, index) => (
-              <div key={index} className="bg-zinc-800 p-4 rounded-lg text-center transform transition-all duration-300 hover:scale-110 hover:bg-red-500 hover:text-white">
-                {skill}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Work Section */}
-      <section id="work" className="py-12 md:py-24 bg-zinc-900 animate-fadeIn">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">My Work</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <div key={index} className="bg-zinc-800 rounded-lg overflow-hidden relative group">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute inset-0 bg-red-500 bg-opacity-90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <p className="text-white text-center mb-4 px-4">{project.description}</p>
+              <p className="mb-6">Passionate about creating innovative software solutions and always ready for new challenges.</p>
+              <div className="flex space-x-4 mb-6">
+                {[
+                  { href: "https://github.com/MukunaChristian", icon: FaGithub },
+                  { href: "https://www.linkedin.com/in/christian-mukuna-78849a201", icon: FaLinkedin },
+                  { href: "mailto:christianmbuyimukuna@gmail.com", icon: FaEnvelope },
+                  { href: "tel:+27683806340", icon: FaPhone }
+                ].map((social, index) => (
                   <a
-                    href={project.link}
+                    key={index}
+                    href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white text-red-500 px-6 py-2 rounded hover:bg-red-100 transition-colors"
+                    className="text-black hover:text-gray-600 transition-colors"
                   >
-                    View Project
+                    <social.icon size={24} />
                   </a>
-                </div>
+                ))}
               </div>
-            ))}
+
+              <a href="#contact" className="inline-block bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-colors">
+                Get In Touch
+              </a>
+            </div>
+            <div className="md:w-1/2">
+              <img
+                src="/public/chris.jpg"
+                alt="Christian Mukuna Mbuyi"
+                className="rounded-full mx-auto w-64 h-64 object-cover animate-fade-in-scale"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contact Form */}
-      <section id="contact" className="py-12 md:py-24 animate-fadeIn">
-        <div className="container mx-auto px-4 max-w-md">
-          <h2 className="text-3xl font-bold mb-8 text-center">Get In Touch</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-red-500"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-red-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <textarea
-              placeholder="Your Message"
-              className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-red-500"
-              rows={4}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-            ></textarea>
-            <button type="submit" className="w-full bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded transition-colors">Send Message</button>
-          </form>
-        </div>
-      </section>
+        <section id="about" ref={sectionRefs.about} className={`py-12 md:py-24 transition-opacity duration-1000 ${visibleSections.includes('about') ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">About Me</h2>
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="md:w-1/2 mb-8 md:mb-0">
+                <img
+                  src="/public/chris2.jpg"
+                  alt="Christian Mukuna Mbuyi"
+                  className="rounded-lg mx-auto w-full max-w-md transform transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="md:w-1/2 md:pl-8 space-y-4">
+                <p>
+                  Hello, I&apos;m Christian Mukuna Mbuyi, a driven software developer intern with a recent diploma in ICT Application Development from the Cape Peninsula University of Technology. Known for my diligence and ability to quickly learn and adapt, I tackle each project as a new challenge, fully committed to delivering high-quality solutions.
+                </p>
+                <p>
+                  My development journey started with a state diploma in commerce and administration, which gave me foundational exposure to HTML, CSS, JavaScript, and Visual Studio. Over time, I&apos;ve built upon these basics through hands-on experience in software and application development across various group projects, expanding my knowledge and expertise in desktop and mobile programming.
+                </p>
+                <p>
+                  Throughout my academic career, I&apos;ve developed strong skills in Java, Android programming, design patterns, and object-oriented principles. I am proficient in data structures, algorithms, software analysis, normalization, and unit testing. Additionally, I am skilled in Git, GitHub, React with TypeScript, and client-server programming using sockets. My aim is to continue growing as a developer and make a meaningful impact in the tech industry.
+                </p>
+              </div>
 
-      {/* Footer */}
-      <footer className="py-6 bg-zinc-900">
+            </div>
+          </div>
+        </section>
+
+        <section id="services" ref={sectionRefs.services} className={`py-12 md:py-24 bg-gray-50 transition-opacity duration-1000 ${visibleSections.includes('services') ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">My Services</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {services.map((service, index) => (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105">
+                  <service.icon className="text-black text-4xl mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                  <p className="text-gray-600">{service.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="skills" ref={sectionRefs.skills} className={`py-12 md:py-24 transition-opacity duration-1000 ${visibleSections.includes('skills') ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">My Skills</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {skills.map((skill, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="font-medium">{skill.name}</span>
+                    <span className="text-gray-600">{skill.level}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div
+                      className="bg-black h-2.5 rounded-full transition-all duration-1000 ease-out"
+                      style={{ width: visibleSections.includes('skills') ? `${skill.level}%` : '0%' }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="work" ref={sectionRefs.work} className={`py-12 md:py-24 bg-gray-50 transition-opacity duration-1000 ${visibleSections.includes('work') ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">My Work</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {projects.map((project, index) => (
+                <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
+                    <p className="text-white text-center mb-4 px-4">{project.description}</p>
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded transition-colors"
+                    >
+                      View Project
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" ref={sectionRefs.contact} className={`py-12 md:py-24 transition-opacity duration-1000 ${visibleSections.includes('contact') ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="container mx-auto px-4 max-w-md">
+            <h2 className="text-3xl font-bold mb-8 text-center">Get In Touch</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <textarea
+                placeholder="Your Message"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                rows={4}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+              ></textarea>
+              <button type="submit" className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-colors">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer className="py-6 bg-white border-t border-black">
         <div className="container mx-auto px-4 text-center">
           <p>&copy; {new Date().getFullYear()} Christian Mukuna Mbuyi. All rights reserved.</p>
         </div>

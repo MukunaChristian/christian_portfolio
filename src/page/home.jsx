@@ -3,6 +3,8 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaCode, FaMobile, FaDesktop,
 import heroImage from "../assets/chris.jpg"
 import aboutImage from "../assets/chris2.jpg"
 import ltxImage from "../assets/L2X.png"
+import hjo from "../assets/logo.jpg"
+
 
 
 const roles = ["Software Developer", "ICT Graduate", "Tech Enthusiast", "Web developer"];
@@ -19,37 +21,37 @@ const projects = [
     title: "Electrical Services",
     description: "A website for an electrical services company showcasing their offerings and expertise.",
     image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2069&q=80",
-    link: "https://github.com/Host-It-Services/electrical_services"
+    link: "https://tumbamuntutrading.co.za/"
   },
   {
     title: "Host It Services",
     description: "Web platform for Host It Services, offering various IT solutions and hosting services.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2072&q=80",
-    link: "https://github.com/Host-It-Services/Host_It_Services_web"
+    link: "https://test.hostitservices.com/"
   },
   {
-    title: "Lab Trader",
-    description: "An e-commerce platform specialized in diamond trading and laboratory equipment.",
-    image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=2070&q=80",
-    link: "https://github.com/MukunaChristian/labtrader"
+    title: "hjha",
+    description: "A website for air condition.",
+    image: hjo,
+    link: "https://hjha.ao/"
   },
   {
     title: "Link2Extreme",
     description: "A system for extreme sports and adventure activities.",
     image: ltxImage,
-    link: "https://github.com/MukunaChristian/Link2Extreme"
+    link: "#"
   },
   {
     title: "Career Pilot App",
     description: "A responsive web application for managing career tasks and productivity goals.",
     image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=2072&q=80",
-    link: "https://github.com/MukunaChristian/Career-Pilot-backend"
+    link: "#"
   },
   {
     title: "Storage Rental System",
     description: "A storage management platform where users can store items while traveling or needing temporary storage solutions.",
     image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?auto=format&fit=crop&w=2070&q=80",
-    link: "https://github.com/MukunaChristian/Storage-Rental-System-2.0-FrontEnd"
+    link: "#"
   },
   {
     title: "Mwimpe E-Commerce",
@@ -61,7 +63,7 @@ const projects = [
     title: "Job Search System",
     description: "An application for job seekers and employers to post and find job opportunities, providing a comprehensive platform for job searching and recruitment.",
     image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=2070&q=80",
-    link: "https://github.com/MukunaChristian/Job-Search-System"
+    link: "#"
   }
 ]
 
@@ -127,15 +129,19 @@ export default function Portfolio() {
     };
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', { name, email, message });
-  };
+  
 
   const handleMenuClick = () => {
     if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
     }
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const mailtoLink = `mailto:christianmbuyimukuna@gmail.com?subject=Contact from ${name}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+    window.location.href = mailtoLink;
   };
 
   return (
@@ -311,40 +317,55 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="contact" ref={sectionRefs.contact} className={`py-12 md:py-24 transition-opacity duration-1000 ${visibleSections.includes('contact') ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="container mx-auto px-4 max-w-md">
-            <h2 className="text-3xl font-bold mb-8 text-center">Get In Touch</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <textarea
-                placeholder="Your Message"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                rows={4}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-              ></textarea>
-              <button type="submit" className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-colors">
-                Send Message
-              </button>
-            </form>
+        <section id="contact" className="py-12 md:py-24 transition-opacity duration-1000">
+      <div className="container mx-auto px-4 max-w-md">
+        <h2 className="text-3xl font-bold mb-8 text-center">Get In Touch</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
-        </section>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Your Message"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              rows={4}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-colors">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
       </main>
 
       <footer className="py-6 bg-white border-t border-black">

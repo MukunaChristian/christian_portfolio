@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaCode, FaMobile, FaDesktop, FaDatabase, FaBars, FaTimes } from 'react-icons/fa';
+import heroImage from "../assets/chris.jpg"
+import aboutImage from "../assets/chris2.jpg"
+import ltxImage from "../assets/L2X.png"
+
 
 const roles = ["Software Developer", "ICT Graduate", "Tech Enthusiast", "Web developer"];
 
@@ -32,7 +36,7 @@ const projects = [
   {
     title: "Link2Extreme",
     description: "A system for extreme sports and adventure activities.",
-    image: "/public/L2X.png",
+    image: ltxImage,
     link: "https://github.com/MukunaChristian/Link2Extreme"
   },
   {
@@ -206,7 +210,7 @@ export default function Portfolio() {
             </div>
             <div className="md:w-1/2">
               <img
-                src="/public/chris.jpg"
+                src={heroImage}
                 alt="Christian Mukuna Mbuyi"
                 className="rounded-full mx-auto w-64 h-64 object-cover animate-fade-in-scale"
               />
@@ -220,7 +224,7 @@ export default function Portfolio() {
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 mb-8 md:mb-0">
                 <img
-                  src="/public/chris2.jpg"
+                  src={aboutImage}
                   alt="Christian Mukuna Mbuyi"
                   className="rounded-lg mx-auto w-full max-w-md transform transition-transform duration-500 hover:scale-105"
                 />

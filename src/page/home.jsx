@@ -4,6 +4,12 @@ import heroImage from "../assets/chris.jpg"
 import aboutImage from "../assets/chris2.jpg"
 import ltxImage from "../assets/L2X.png"
 import hjo from "../assets/logo.jpg"
+import mwmpeLogo from "../assets/icon1.jpg"
+import babycare from "../assets/Gold-cloud-logo.png"
+import mb from "../assets/2.png"
+import veggies from "../assets/veggie.jpg"
+
+
 
 
 
@@ -27,13 +33,37 @@ const projects = [
     title: "Host It Services",
     description: "Web platform for Host It Services, offering various IT solutions and hosting services.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2072&q=80",
-    link: "https://test.hostitservices.com/"
+    link: "https://hostitservices.com/"
   },
   {
     title: "hjha",
     description: "A website for air condition.",
     image: hjo,
     link: "https://hjha.ao/"
+  },
+  {
+    title: "Babysitter and Nannies Agency",
+    description: "Babysitter and Nannies Agency in Cape Town",
+    image: babycare,
+    link: "https://mumandbabycareservices.co.za/"
+  },
+  {
+    title: "MB Chemprojects",
+    description: "Innovative Engineering Solutions Specializing in water treatment, process equipment, and engineering projects",
+    image: mb,
+    link: "https://mumandbabycareservices.co.za/"
+  },
+  {
+    title: "Easy Veggies",
+    description: "healthy, and convenient food products are accessed and enjoyed",
+    image: veggies,
+    link: "https://easyveggies.co.za/"
+  },
+  {
+    title: "Mwimpe E-Commerce",
+    description: "A skincare e-commerce website, offering a variety of skincare products with a focus on user-friendly shopping experiences.",
+    image: mwmpeLogo,
+    link: "https://mwimpebeauty.co.za/"
   },
   {
     title: "Link2Extreme",
@@ -53,12 +83,7 @@ const projects = [
     image: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?auto=format&fit=crop&w=2070&q=80",
     link: "#"
   },
-  {
-    title: "Mwimpe E-Commerce",
-    description: "A skincare e-commerce website, offering a variety of skincare products with a focus on user-friendly shopping experiences.",
-    image: "https://images.unsplash.com/photo-1570554886111-e80fcca6a029?auto=format&fit=crop&w=2070&q=80",
-    link: "https://github.com/MukunaChristian/Mwimpe-Ecom"
-  },
+
   {
     title: "Job Search System",
     description: "An application for job seekers and employers to post and find job opportunities, providing a comprehensive platform for job searching and recruitment.",
@@ -288,34 +313,36 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="work" ref={sectionRefs.work} className={`py-12 md:py-24 bg-gray-50 transition-opacity duration-1000 ${visibleSections.includes('work') ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">My Work</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-white text-center mb-4 px-4">{project.description}</p>
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded transition-colors"
-                    >
-                      View Project
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <section id="work" ref={sectionRefs.work} className={`py-8 md:py-16 bg-gray-50 transition-opacity duration-1000 ${visibleSections.includes('work') ? 'opacity-100' : 'opacity-0'}`}>
+  <div className="container mx-auto px-4">
+    <h2 className="text-2xl font-semibold mb-6 text-center">My Work</h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {projects.map((project, index) => (
+        <div key={index} className="relative group overflow-hidden rounded-md shadow-md">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
+            <p className="text-white text-center mb-3 px-3 text-sm">{project.description}</p>
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-gray-200 text-black font-medium py-1.5 px-3 rounded transition-colors text-sm"
+            >
+              View Project
+            </a>
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
 
         <section id="contact" className="py-12 md:py-24 transition-opacity duration-1000">
       <div className="container mx-auto px-4 max-w-md">

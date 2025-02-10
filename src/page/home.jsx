@@ -51,7 +51,7 @@ const projects = [
     title: "MB Chemprojects",
     description: "Innovative Engineering Solutions Specializing in water treatment, process equipment, and engineering projects",
     image: mb,
-    link: "https://mumandbabycareservices.co.za/"
+    link: "https://chemprojects.co.za/"
   },
   {
     title: "Easy Veggies",

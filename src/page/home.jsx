@@ -91,7 +91,6 @@ const projects = [
     link: "#"
   }
 ]
-
 const skills = [
   { name: "HTML", level: 100 },
   { name: "CSS & SCSS & Tailwind", level: 100 },
@@ -103,7 +102,6 @@ const skills = [
   { name: "React & Next.js", level: 95 },
   { name: "TypeScript", level: 70 },
 ]
-
 
 export default function Portfolio() {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -198,7 +196,7 @@ export default function Portfolio() {
               key={item}
               href={`#${item.toLowerCase()}`}
               className="block md:inline py-2 px-4 md:px-0 text-black hover:text-gray-600 transition-colors"
-              onClick={handleMenuClick}  // Close the menu on item click
+              onClick={handleMenuClick}  
             >
               {item}
             </a>
